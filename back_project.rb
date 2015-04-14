@@ -3,9 +3,10 @@
 require 'rubygems'
 require 'commander/import'
 require 'sequel'
+require '../models/*.rb'
 
 program :version, '0.0.1'
-program :description, 'back project'
+program :description, 'KickS back project'
 
 command :back do |c|
   require_relative 'user'
@@ -19,6 +20,8 @@ command :back do |c|
   c.example 'description', 'back <user_name> <project_name> <credit card> <backed_amount>'
   c.option '--some-switch', 'Some switch that does something'
   c.action do |args, options|
+    raise "missing argument" unless args[0] && args[1] && args[2] && args[3]
+
     project = Project.find(name: args[1])
     if project.nil?
       puts "That project does not exist"
@@ -56,6 +59,8 @@ command :backer do |c|
   c.example 'description', 'backer <backer_name>'
   c.option '--some-switch', 'Some switch that does something'
   c.action do |args, options|
+      raise "missing argument" unless args[0] 
+
       backer = User.find(name: args[0])
 
       if backer 
