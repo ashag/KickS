@@ -2,4 +2,10 @@ source "http://rubygems.org"
 gem "commander"
 gem "sqlite3"
 gem "sequel"
-gem "aruba"
+
+
+group :test do 
+  gem "aruba"
+  gem "rspec"
+  gem "factory_girl", "~> 4.0"
+end
