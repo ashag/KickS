@@ -1,9 +1,8 @@
 require 'spec_helper'
 require 'credit_card'
+require 'user'
 
 describe CreditCard do
-
-
   describe 'check_valid_card' do
     describe 'invalid card numbers' do 
       it 'returns -1 if credit on file' do
@@ -38,5 +37,4 @@ describe CreditCard do
       end
     end 
   end
-
 end

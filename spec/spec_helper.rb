@@ -5,9 +5,8 @@ FactoryGirl.definition_file_paths = [File.expand_path('../factories', __FILE__)]
 FactoryGirl.find_definitions
 
 require 'sequel'
-require_relative 'user'
-# require_relative 'project'
-
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'models'))
+$LOAD_PATH.unshift(File.dirname(__FILE__))
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
