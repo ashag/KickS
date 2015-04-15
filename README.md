@@ -1,6 +1,6 @@
 # KickS
 
-KickS is a mini command line application clone of Kickstarter. It uses [Commander] to manage command line arguments. 
+KickS is a mini command line application clone of Kickstarter. It uses the Commander gem to manage command line arguments. 
 
 ##Dependencies
   - sqlite3
@@ -37,5 +37,3 @@ Back a project:
 Show projects that user has backed:
 ./backed_project.rb backer [user_name]
 ```
-
-[Commander](https://github.com/tj/commander)
