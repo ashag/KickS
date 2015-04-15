@@ -22,5 +22,4 @@ DB.create_table :projects do
   String :name
   Integer :user_id
   Float :target_amount
-  Float :backed_amount
 end

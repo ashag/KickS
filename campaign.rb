@@ -3,6 +3,7 @@
 require 'rubygems'
 require 'commander/import'
 require 'sequel'
+require 'yaml'
 
 
 program :version, '0.0.1'
@@ -13,14 +14,22 @@ command :project do |c|
   c.description = 'Creates a new project'
   c.action do |args, options|
     require_relative 'kicks'
+    error = YAML.load_file("constants.yml")
 
-    raise "missing argument" unless args[0] && args[1] && args[2]
-  
-    creator = User.find_or_create(name: args[1])
-    dollars = args[2].split('$').last
+    raise error[:missing_argument] unless args[0] && args[1] && args[2]
+     
+    if validate_target_amount(args[2]) != nil
+      target_amount = remove_dollar_symbol(args[2])
+    else
+      puts error[:incorrect_currency]
+      exit
+    end
+
+    puts target_amount
     
     begin
-      project = Project.create(name: args[0], user_id: creator.id, target_amount: dollars)
+      creator = User.find_or_create(name: args[1])
+      project = Project.create(name: args[0], user_id: creator.id, target_amount: target_amount)
       puts "Added #{project.name} project with target of $#{project.target_amount}"
     rescue Sequel::ValidationFailed => e
       puts "Error: #{e}"
@@ -33,8 +42,9 @@ command :list do |c|
   c.description = 'Lists backers for project'
   c.action do |args, options|
     require_relative 'kicks'
+    error = YAML.load_file("constants.yml")
 
-    raise "missing argument" unless args[0]
+    raise error[:missing_argument] unless args[0] 
 
     project = Project.where(name: args[0]).first
 
@@ -56,5 +66,37 @@ command :list do |c|
       puts "#{project.name} needs $#{remaining_amount} more dollars to be successful"
     end
   end
+end
+
+command :myprojects do |c|
+  c.syntax = 'myprojects <creator_name>'
+  c.description = 'Lists creator projects'
+  c.action do |args, options|
+    require_relative 'kicks'
+    error = YAML.load_file("constants.yml")
+
+    raise error[:missing_argument] unless args[0]
+    creator = User.find(name: args[0])
+
+    if creator
+      projects = Project.where(user_id: creator.id)
+      puts "#{creator.name} has #{projects.count} projects:"
+      
+      projects.each do |p|
+        puts "- #{p.name}"
+      end
+    else
+      raise error[:no_user]
+    end
+  end
+end
+
+def remove_dollar_symbol(dollars)
+  dollars.split('$').last
+end
+
+def validate_target_amount(dollars)
+  # valid formats $.90, $900.00, $9000, 900.00
+  dollars =~ /^(\$)?(\d+|\.)(\.)?\d{0,2}?$/
 end
 

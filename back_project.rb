@@ -18,15 +18,20 @@ command :back do |c|
 
     error = YAML.load_file("constants.yml")
 
-    raise "missing argument" unless args[0] && args[1] && args[2] && args[3]
+    raise error[:missing_argument] unless args[0] && args[1] && args[2] && args[3]
 
     project = find_project(args[1])
     if project.nil?
       puts error[:proj_not_found]
       exit
-    end 
+    end
 
-    check_card(args[0], args[2], parse_currency(args[3]), project)
+    if validate_backed_amount(args[3]) != nil
+      check_card(args[0], args[2], args[3], project) 
+    else
+      puts error[:incorrect_currency]
+      exit
+    end
   end
 end
 
@@ -37,7 +42,7 @@ command :backer do |c|
     require_relative 'kicks'
     error = YAML.load_file("constants.yml")
 
-    raise "missing argument" unless args[0] 
+    raise error[:missing_argument] unless args[0] 
 
     backer = find_backer(args[0])
 
@@ -58,16 +63,14 @@ command :backer do |c|
   end
 end
 
+
 def error
   YAML.load_file("constants.yml")
 end
 
-def parse_currency(dollars)
-  dollars.split('$').last
-end
-
 def validate_backed_amount(dollars)
-  dollars =~ /^(\$)?(\d+)(\.|,)?\d{0,2}?$/
+  # valid formats 0.10, 10.00, 100.00, 100
+  dollars =~ /^\d+(\d+|\.)(\.)?\d{0,2}?$/
 end
 
 def find_backer(user)
@@ -96,7 +99,7 @@ def check_card(user,card_numbers,backed_amount,project)
     puts error[:invalid_card]
   else
     backer = User.find_or_create(name: user)
-    update_user_card(backer,card_numbers) if validate_backed_amount(backed_amount) 
+    update_user_card(backer,card_numbers) 
     process_fund(backer,backed_amount,project)
   end  
 end

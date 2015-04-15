@@ -12,7 +12,11 @@ class CreditCard
       return -2
     end
 
-    validate_card_numbers
+    if @card_numbers.length > 19 
+      raise "Invalid card"
+    end
+
+    verify_luhn
   end
 
   def credit_on_file
@@ -25,21 +29,6 @@ class CreditCard
 
   def validate_card_numbers
     verify_card_type != "Unknown" && verify_luhn
-  end
-
-  def verify_card_type
-    length = @card_numbers.size
-    if length == 15 && @card_numbers =~ /^(34|37)/
-      "AMEX"
-    elsif length == 16 && @card_numbers =~ /^6011/
-      "Discover"
-    elsif length == 16 && @card_numbers =~ /^5[1-5]/
-      "MasterCard"
-    elsif (length == 13 || length == 16) && @card_numbers =~ /^4/
-      "Visa"
-    else
-      "Unknown"
-    end
   end
 
   def verify_luhn

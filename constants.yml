@@ -5,3 +5,5 @@
  :missing_project: "That project does not exist"
  :no_user: "No user by that name"
  :proj_not_found: "Project not found"
+ :incorrect_currency: "Incorrect currency format"
+ :missing_argument: "Missing argument"
