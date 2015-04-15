@@ -36,6 +36,12 @@ Show status of project (backers and success):
 ```
 
 
+Show projects by creator:
+```sh
+./campaign.rb myprojects [creator_name]
+```
+
+
 Back a project:
 ```sh
 ./back_project.rb back [user_name] [project_name] [credit_card] [backed_amount]
@@ -46,5 +52,6 @@ Back a project:
 
 
 Show projects that user has backed:
+```sh
 ./backed_project.rb backer [user_name]
 ```
