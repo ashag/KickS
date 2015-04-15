@@ -21,7 +21,8 @@ sh deploy.sh
 
 ##Commands
 Create a project:
-```sh ./campaign.rb project [project_name] [creator_name] [target_amount]
+```sh
+./campaign.rb project [project_name] [creator_name] [target_amount]
 ```
 
 Show status of project (backers and success):
@@ -35,5 +36,6 @@ Back a project:
 ```
 
 Show projects that user has backed:
+```sh
 ./backed_project.rb backer [user_name]
 ```
