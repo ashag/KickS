@@ -84,7 +84,7 @@ end
 def update_user_card(backer, card_numbers)
   begin
     backer.update(credit_card: card_numbers)
-  rescue Sequel::ValidationFailed => e
+  rescue => e
     abort puts "Error: #{e}"
   end
 end

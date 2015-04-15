@@ -55,3 +55,15 @@ Show projects that user has backed:
 ```sh
 ./backed_project.rb backer [user_name]
 ```
+
+##Things I want to work on
+- Refactoring all the logic in back_project.rb, create class, write specs for them
+- Test the command line outputs
+- Test performance
+
+#Thoughts
+- I initally used Thor as the CLI. I found that it was complicated to require files and hook the database. Commander was powerful while being simple.
+- I used Sequel because I wanted an ORM like Active Record. 
+- I created a YAML file with messages so it's easy to change messages across the app without manually changing each one
+
+

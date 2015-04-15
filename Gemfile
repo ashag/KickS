@@ -7,5 +7,4 @@ gem "sequel"
 group :test do 
   gem "aruba"
   gem "rspec"
-  gem "factory_girl", "~> 4.0"
 end
