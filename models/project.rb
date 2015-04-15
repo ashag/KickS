@@ -8,7 +8,7 @@ class Project < Sequel::Model
   def validate
     super
     validates_presence [:name, :target_amount]
-    validates_unique :name, :message=> ' => Project name already exists'
+    validates_unique :name, :message=> ' => Project name is taken'
     validates_min_length 4, :name, :message=> ' => Project name can\'t be shorter than 4 characters'
     validates_max_length 20, :name, :message=> ' => Project name can\'t be longer than 20 characters'
     validates_format (/^(\$)?(\d+)(\.|,)?\d{0,2}?$/), :target_amount, :message=> '=> Incorrect currency format'

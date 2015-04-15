@@ -7,5 +7,6 @@ class Fund < Sequel::Model
 
   def validate
     validates_presence [:backed_amount, :project_id, :user_id]
+    validates_format (/^(\$)?(\d+)(\.|,)?\d{0,2}?$/), :backed_amount, :message=> '=> Incorrect currency format'
   end
 end
