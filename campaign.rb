@@ -80,7 +80,7 @@ command :myprojects do |c|
 
     if creator
       projects = Project.where(user_id: creator.id)
-      puts "#{creator.name} has #{projects.count} projects:"
+      puts "#{creator.name} has #{projects.count} project(s):"
       
       projects.each do |p|
         puts "- #{p.name}"

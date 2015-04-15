@@ -27,10 +27,6 @@ class CreditCard
     Integer(@card_numbers) rescue false
   end
 
-  def validate_card_numbers
-    verify_card_type != "Unknown" && verify_luhn
-  end
-
   def verify_luhn
     numbers = ''
     @card_numbers.split('').reverse.each_with_index do |n, i|

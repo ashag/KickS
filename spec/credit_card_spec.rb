@@ -22,17 +22,8 @@ describe CreditCard do
       let(:bad_card) { CreditCard.new("4417123456789112") }  
       
       context 'validate_card_numbers' do 
-        it 'will parse the correct credit card type' do 
-          expect(good_card.verify_card_type).to eq("Visa")
-        end
-
         it 'verify_luhn' do 
           expect(good_card.verify_luhn).to eq true
-        end
-
-        it 'validate_card_numbers' do 
-          expect(good_card.validate_card_numbers).to eq true
-          expect(bad_card.validate_card_numbers).to eq false
         end
       end
     end 
