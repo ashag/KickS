@@ -21,8 +21,7 @@ sh deploy.sh
 
 ##Commands
 Create a project:
-```sh
-./campaign.rb project [project_name] [creator_name] [target_amount]
+```sh ./campaign.rb project [project_name] [creator_name] [target_amount]
 ```
 
 Show status of project (backers and success):
@@ -39,4 +38,4 @@ Show projects that user has backed:
 ./backed_project.rb backer [user_name]
 ```
 
-[Commander]:https://github.com/tj/commander
+[Commander](https://github.com/tj/commander)
