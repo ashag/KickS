@@ -21,8 +21,7 @@ command :project do |c|
     if validate_target_amount(args[2]) != nil
       target_amount = remove_dollar_symbol(args[2])
     else
-      puts error[:incorrect_currency]
-      exit
+      raise error[:incorrect_currency]
     end
     
     begin
@@ -44,15 +43,12 @@ command :list do |c|
 
     raise error[:missing_argument] unless args[0] 
 
-    project = Project.where(name: args[0]).first
+    project = Project.find(name: args[0])
 
-    if project
-      project.funds.each do |p|
-        puts "#{p.user.name} backed for $#{p.backed_amount}"
-      end
-    else
-      puts "#{args[0]} does not exist"
-      exit
+    raise error[:proj_not_found] if !project
+
+    project.funds.each do |p|
+      puts "#{p.user.name} backed for $#{p.backed_amount}"
     end
 
     backed_amount = Project.funded_amount(args[0])
@@ -74,17 +70,16 @@ command :myprojects do |c|
     error = YAML.load_file("constants.yml")
 
     raise error[:missing_argument] unless args[0]
+    
     creator = User.find(name: args[0])
 
-    if creator
-      projects = Project.where(user_id: creator.id)
-      puts "#{creator.name} has #{projects.count} project(s):"
-      
-      projects.each do |p|
-        puts "- #{p.name}"
-      end
-    else
-      raise error[:no_user]
+    raise error[:no_user] if !creator
+    
+    projects = Project.where(user_id: creator.id)
+    puts "#{creator.name} has #{projects.count} project(s):"
+    
+    projects.each do |p|
+      puts "- #{p.name}"
     end
   end
 end
