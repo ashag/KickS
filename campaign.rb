@@ -24,8 +24,6 @@ command :project do |c|
       puts error[:incorrect_currency]
       exit
     end
-
-    puts target_amount
     
     begin
       creator = User.find_or_create(name: args[1])
