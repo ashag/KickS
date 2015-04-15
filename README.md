@@ -11,7 +11,7 @@ KickS is a mini command line application clone of Kickstarter. It uses the Comma
 KickS assumes you have Ruby and Bundler.
 
 If you don’t have SQLite, you will have to install it. 
-Homebrew:  ```sh brew install sqlite```
+Homebrew:  ```brew install sqlite```
 
 ##Build
 Install gems and build database:
