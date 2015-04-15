@@ -13,8 +13,8 @@ command :project do |c|
   c.syntax = 'project <project_name> <creator_name> <target_amount>'
   c.description = 'Creates a new project'
   c.action do |args, options|
-    require_relative 'kicks'
-    error = YAML.load_file("constants.yml")
+    require_relative 'kicks' #load models
+    error = YAML.load_file("constants.yml") #load error messages
 
     raise error[:missing_argument] unless args[0] && args[1] && args[2]
      

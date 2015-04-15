@@ -5,15 +5,15 @@ class CreditCard
 
   def check_valid_card
     if credit_on_file > 0
-      return -1
+      raise error[:dup_card]
     end
 
     if !verify_numeric
-      return -2
+      raise error[:card_syntax]
     end
 
     if @card_numbers.length > 19 
-      raise "Invalid card"
+      raise error[:invalid_card]
     end
 
     verify_luhn

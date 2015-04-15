@@ -14,9 +14,9 @@ command :back do |c|
   c.syntax = 'back <user_name> <project_name> <credit card> <backed_amount>'
   c.description = 'Back a project'
   c.action do |args, options|
-    require_relative 'kicks'
+    require_relative 'kicks' #load models
 
-    error = YAML.load_file("constants.yml")
+    error = YAML.load_file("constants.yml") #load error messages
 
     raise error[:missing_argument] unless args[0] && args[1] && args[2] && args[3]
 
@@ -29,8 +29,7 @@ command :back do |c|
     if validate_backed_amount(args[3]) != nil
       check_card(args[0], args[2], args[3], project) 
     else
-      puts error[:incorrect_currency]
-      exit
+      raise error[:incorrect_currency]
     end
   end
 end
@@ -49,8 +48,7 @@ command :backer do |c|
     if backer 
       backed = Fund.where(user_id: backer.id)
     else 
-      puts error[:no_user]
-      exit
+      raise error[:no_user]
     end
 
     if backed.count > 0
@@ -90,18 +88,10 @@ def update_user_card(backer, card_numbers)
 end
 
 def check_card(user,card_numbers,backed_amount,project)
-  case CreditCard.new(card_numbers).check_valid_card
-  when -1 
-    puts error[:dup_card]
-  when -2
-    puts error[:card_syntax]
-  when false
-    puts error[:invalid_card]
-  else
-    backer = User.find_or_create(name: user)
-    update_user_card(backer,card_numbers) 
-    process_fund(backer,backed_amount,project)
-  end  
+  CreditCard.new(card_numbers).check_valid_card
+  backer = User.find_or_create(name: user)
+  update_user_card(backer,card_numbers) 
+  process_fund(backer,backed_amount,project)
 end
 
 def process_fund(backer,backed_amount,project)
