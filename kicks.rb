@@ -1,0 +1,5 @@
+directory = File.expand_path(File.dirname(__FILE__))
+require File.join(directory, 'models/user')
+require File.join(directory, 'models/project')
+require File.join(directory, 'models/fund')
+require File.join(directory, 'lib/credit_card')

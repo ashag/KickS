@@ -1,0 +1,7 @@
+ :dup_card: "ERROR That card has already been added by another user!"
+ :card_syntax: "We cannot process your card. Please check the numbers."
+ :invalid_card: "ERROR This card is invalid"
+ :oops: "Something went wrong. We're sorry for the inconvenience. Please try again."
+ :missing_project: "That project does not exist"
+ :no_user: "No user by that name"
+ :proj_not_found: "Project not found"
