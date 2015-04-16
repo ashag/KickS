@@ -54,7 +54,7 @@ command :list do |c|
     backed_amount = Project.funded_amount(args[0])
     remaining_amount = project.target_amount - backed_amount 
 
-    if backed_amount > project.target_amount
+    if backed_amount >= project.target_amount
       puts "#{project.name} is successful!"
     else
       puts "#{project.name} needs $#{remaining_amount} more dollars to be successful"
