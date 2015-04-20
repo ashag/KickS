@@ -1,7 +1,13 @@
+require 'yaml'
+
 class CreditCard 
   def initialize(card_numbers)
     @card_numbers = card_numbers
-    @error = YAML.load_file("constants.yml")
+    @error = load_messages
+  end
+
+  def load_messages
+    YAML.load_file("constants.yml")
   end
 
   def check_valid_card

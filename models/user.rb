@@ -1,3 +1,5 @@
+require 'sequel'
+
 Sequel.connect('sqlite://test.db')
 
 class User < Sequel::Model

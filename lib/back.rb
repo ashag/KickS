@@ -1,9 +1,6 @@
 require 'yaml'
-require_relative '../kicks'
-
 
 class Back
-
   def initialize(user, card_numbers, project, backed_amount)
     @backer = User.find_or_create(name: user)
     @card_numbers = card_numbers
@@ -20,8 +17,11 @@ class Back
   end
 
   def check_card
-    CreditCard.new(@card_numbers).check_valid_card
-    update_user_card
+    if CreditCard.new(@card_numbers).check_valid_card
+      update_user_card
+    else
+      abort @error[:invalid_card]
+    end
   end
 
   def validate_backed_amount
