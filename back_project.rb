@@ -14,23 +14,24 @@ command :back do |c|
   c.syntax = 'back <user_name> <project_name> <credit card> <backed_amount>'
   c.description = 'Back a project'
   c.action do |args, options|
-    require_relative 'kicks' #load models
+    require_relative 'kicks'
+    require_relative 'lib/back' #load models
 
     error = YAML.load_file("constants.yml") #load error messages
 
-    raise error[:missing_argument] unless args[0] && args[1] && args[2] && args[3]
+    abort error[:missing_argument] unless args[0] && args[1] && args[2] && args[3]
 
     project = find_project(args[1])
     if project.nil?
-      puts error[:proj_not_found]
-      exit
+      abort error[:proj_not_found]
     end
 
-    if validate_backed_amount(args[3]) != nil
-      check_card(args[0], args[2], args[3], project) 
-    else
-      raise error[:incorrect_currency]
-    end
+    Back.new(args[0], args[2], project, args[3]).check_card
+    # if validate_backed_amount(args[3]) != nil
+    #   check_card(args[0], args[2], args[3], project) 
+    # else
+    #   raise error[:incorrect_currency]
+    # end
   end
 end
 
@@ -64,11 +65,6 @@ end
 
 def error
   YAML.load_file("constants.yml")
-end
-
-def validate_backed_amount(dollars)
-  # valid formats 0.10, 10.00, 100.00, 100
-  dollars =~ /^\d+(\d+|\.)(\.)?\d{0,2}?$/
 end
 
 def find_backer(user)

@@ -1,19 +1,20 @@
 class CreditCard 
   def initialize(card_numbers)
     @card_numbers = card_numbers
+    @error = YAML.load_file("constants.yml")
   end
 
   def check_valid_card
     if credit_on_file > 0
-      raise error[:dup_card]
+      abort @error[:dup_card]
     end
 
     if !verify_numeric
-      raise error[:card_syntax]
+      abort @error[:card_syntax]
     end
 
     if @card_numbers.length > 19 
-      raise error[:invalid_card]
+      abort error[:invalid_card]
     end
 
     verify_luhn
