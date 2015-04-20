@@ -5,15 +5,15 @@ require 'user'
 describe CreditCard do
   describe 'check_valid_card' do
     describe 'invalid card numbers' do 
-      it 'returns -1 if credit on file' do
+      it 'returns error if credit on file' do
         card = CreditCard.new("4417123456789112")
         User.create(name: "h", credit_card: "4417123456789112")
-        expect(card.check_valid_card).to eq(-1)
+        expect{card.check_valid_card}.to raise_error(SystemExit)
       end
 
-      it 'returns -2 if card numbers are not all integers' do 
-        cards = CreditCard.new("4417123456789ff2")
-        expect(cards.check_valid_card).to eq(-2)
+      it 'returns error if card numbers are not all integers' do 
+        card = CreditCard.new("4417123456789ff2")
+        expect{card.check_valid_card}.to raise_error(SystemExit)
       end
     end
 

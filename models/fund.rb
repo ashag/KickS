@@ -1,5 +1,3 @@
-require 'sequel'
-
 Sequel.connect('sqlite://test.db')
 
 class Fund < Sequel::Model

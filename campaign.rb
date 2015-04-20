@@ -21,7 +21,7 @@ command :project do |c|
     if validate_target_amount(args[2]) != nil
       target_amount = remove_dollar_symbol(args[2])
     else
-      raise error[:incorrect_currency]
+      abort error[:incorrect_currency]
     end
     
     begin

@@ -3,14 +3,20 @@ require_relative '../kicks'
 
 
 class Back
+
   def initialize(user, card_numbers, project, backed_amount)
     @backer = User.find_or_create(name: user)
     @card_numbers = card_numbers
     @project = project
     @backed_amount = backed_amount
-    error = YAML.load_file("constants.yml")
 
-    abort error[:incorrect_currency] if validate_backed_amount == nil
+    @error = load_messages
+ 
+    abort @error[:incorrect_currency] if validate_backed_amount == nil
+  end
+
+  def load_messages
+    YAML.load_file("constants.yml")
   end
 
   def check_card

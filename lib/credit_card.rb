@@ -14,7 +14,7 @@ class CreditCard
     end
 
     if @card_numbers.length > 19 
-      abort error[:invalid_card]
+      abort @error[:invalid_card]
     end
 
     verify_luhn
